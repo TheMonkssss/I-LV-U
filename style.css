@@ -1,0 +1,106 @@
+:root {
+  --pink-text: #ff69b4;
+  --background: #000;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'My Love', cursive;
+  background-color: var(--background);
+}
+
+#matrix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.Love__You {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: var(--pink-text);
+  font-size: 3rem;
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  text-align: center;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+  }
+  to {
+    text-shadow: 0 0 30px #ff69b4, 0 0 60px #ff69b4;
+  }
+}
+
+/* ❤️ Heart effect */
+.heart {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  transform: rotate(45deg);
+  animation: floatUp 1.2s ease-out forwards;
+  z-index: 3;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: inherit;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -12.5px;
+  left: 0;
+}
+.heart::after {
+  top: 0;
+  left: -12.5px;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) rotate(45deg) translateY(-100px);
+  }
+}
+
+/* ✨ Sparkle effect */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  z-index: 3;
+  animation: sparkleMove 1s ease-out forwards;
+}
+
+@keyframes sparkleMove {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+}

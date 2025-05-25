@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>I Love You</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'My Love';
+      src: local('Pacifico'),
+        url('https://fonts.gstatic.com/s/pacifico/v22/FwZY7-Qmy14u9lezJ-6H6Mk.woff2') format('woff2');
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="Love__You">I LOVE YOU ❤️</div>
+
+  <!-- Matrix effect -->
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "I LOVE YOU ";
+    const fontSize = 18;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#ff69b4";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+
+  <!-- Click animation -->
+  <script>
+    function randomColor() {
+      const colors = ["#ff69b4", "#ff1493", "#ffb6c1", "#ffc0cb"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function createHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = `${x}px`;
+      heart.style.top = `${y}px`;
+      heart.style.backgroundColor = randomColor();
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 1200);
+    }
+
+    function createSparkle(x, y) {
+      for (let i = 0; i < 6; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+        sparkle.style.backgroundColor = randomColor();
+        sparkle.style.setProperty("--dx", `${(Math.random() - 0.5) * 100}px`);
+        sparkle.style.setProperty("--dy", `${(Math.random() - 0.5) * 100}px`);
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+
+    function handleClick(e) {
+      const x = e.clientX || e.touches[0].clientX;
+      const y = e.clientY || e.touches[0].clientY;
+      createHeart(x, y);
+      createSparkle(x, y);
+    }
+
+    document.addEventListener("click", handleClick);
+    document.addEventListener("touchstart", handleClick);
+  </script>
+</body>
+</html>
